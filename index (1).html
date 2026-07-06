@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIP ROI Framework — Digitera Levi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --beige:#F8F1E4;
+    --beige-deep:#EFE1C8;
+    --lilac:#EAE0F7;
+    --lilac-deep:#D7C3EE;
+    --purple:#4B2E7D;
+    --purple-deep:#2A1746;
+    --purple-mid:#7C56B4;
+    --gold:#C79A3E;
+    --gold-light:#E9C978;
+    --gold-deep:#9C7628;
+    --ink:#241535;
+    --cream:#FFFCF6;
+    --line:rgba(75,46,125,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Plus Jakarta Sans', sans-serif;
+    color:var(--ink);
+    background:var(--beige);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%; display:block;}
+  a{text-decoration:none; color:inherit;}
+  .container{max-width:1120px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3,h4{font-family:'Fraunces', serif; margin:0; color:var(--purple-deep); line-height:1.12;}
+  .eyebrow{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-size:12.5px;
+    color:var(--gold-deep);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{content:''; width:26px; height:2px; background:var(--gold); display:inline-block;}
+  .script{font-family:'Caveat', cursive; font-weight:600;}
+  .section{padding:96px 0; position:relative;}
+  .bg-beige{background:var(--beige);}
+  .bg-lilac{background:linear-gradient(180deg,var(--lilac) 0%, var(--lilac-deep) 100%);}
+  .bg-deep{background:radial-gradient(120% 140% at 20% 0%, #3a2361 0%, var(--purple-deep) 55%, #1c0f33 100%); color:#F3EAFB;}
+  .bg-deep h2,.bg-deep h3,.bg-deep h4{color:#FBF4E8;}
+  .divider{
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
+    max-width:220px;
+    margin:28px auto;
+  }
+  .center{text-align:center;}
+  .lede{
+    font-size:clamp(17px,1.9vw,20px);
+    color:#4B3868;
+    line-height:1.65;
+    max-width:640px;
+  }
+  .bg-deep .lede{color:#D9C9EE;}
+  .center .lede{margin-left:auto; margin-right:auto;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky; top:0; z-index:100;
+    background:rgba(248,241,228,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    transition:box-shadow .3s ease;
+  }
+  .nav.scrolled{box-shadow:0 8px 24px rgba(42,23,70,0.08);}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:10px 24px; max-width:1120px; margin:0 auto;}
+  .nav-brand{display:flex; align-items:center; gap:10px;}
+  .nav-brand img{width:42px; height:42px; border-radius:50%; object-fit:cover;}
+  .nav-brand span{font-family:'Fraunces',serif; font-weight:600; font-size:18px; color:var(--purple-deep);}
+  .nav-cta{
+    background:linear-gradient(135deg, var(--gold-light), var(--gold) 60%, var(--gold-deep));
+    color:var(--purple-deep);
+    font-weight:700;
+    font-size:14px;
+    padding:11px 22px;
+    border-radius:999px;
+    box-shadow:0 6px 16px rgba(199,154,62,0.35);
+    white-space:nowrap;
+  }
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-weight:700;
+    font-size:17px;
+    padding:18px 38px;
+    border-radius:999px;
+    cursor:pointer;
+    border:none;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-gold{
+    background:linear-gradient(135deg, var(--gold-light), var(--gold) 55%, var(--gold-deep));
+    color:var(--purple-deep);
+    box-shadow:0 12px 28px rgba(199,154,62,0.4);
+  }
+  .btn-gold:hover{box-shadow:0 16px 34px rgba(199,154,62,0.5);}
+  .btn-outline{
+    background:transparent;
+    color:var(--purple-deep);
+    border:1.5px solid var(--purple);
+  }
+  .btn-sub{
+    display:block; text-align:center; font-size:13px; color:#6B5789; margin-top:12px; font-weight:600;
+  }
+  .bg-deep .btn-sub{color:#C9B6E4;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:64px 0 90px;
+    background:
+      radial-gradient(60% 50% at 85% 10%, rgba(199,154,62,0.16), transparent 60%),
+      radial-gradient(70% 60% at 10% 90%, rgba(124,86,180,0.18), transparent 60%),
+      linear-gradient(180deg, var(--beige) 0%, var(--lilac) 100%);
+    text-align:center;
+  }
+  .warning-tag{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--purple-deep);
+    color:#F6E9C8;
+    font-weight:800;
+    font-size:13px;
+    letter-spacing:.08em;
+    padding:10px 20px;
+    border-radius:999px;
+    margin-bottom:26px;
+    box-shadow:0 10px 24px rgba(42,23,70,0.25);
+  }
+  .warning-tag .dot{width:8px;height:8px;border-radius:50%;background:#E7B84C; box-shadow:0 0 0 4px rgba(231,184,76,.25);}
+  .hero h1{
+    font-size:clamp(30px, 4.6vw, 54px);
+    font-weight:700;
+    max-width:920px;
+    margin:0 auto 22px;
+  }
+  .hero h1 em{font-style:normal; color:var(--gold-deep);}
+  .hero p.sub{
+    font-size:clamp(16px,2vw,19px);
+    color:#4B3868;
+    max-width:620px;
+    margin:0 auto 38px;
+    line-height:1.6;
+  }
+  .trust-row{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:14px 28px;
+    margin-top:34px; font-size:13.5px; font-weight:700; color:var(--purple);
+  }
+  .trust-row span{display:flex; align-items:center; gap:8px;}
+  .trust-row span::before{content:'✓'; color:var(--gold-deep); font-weight:900;}
+
+  /* ---------- PROBLEM ---------- */
+  .pain-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:52px;}
+  .pain-card{
+    background:var(--cream);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:26px 26px;
+    font-size:15.5px;
+    line-height:1.6;
+    color:#3E2E58;
+    box-shadow:0 10px 26px rgba(42,23,70,0.06);
+  }
+  .pain-card b{color:var(--purple-deep);}
+
+  /* ---------- STORY ---------- */
+  .story-wrap{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:60px;
+    align-items:center;
+  }
+  .story-photo{
+    position:relative;
+  }
+  .story-photo img{
+    border-radius:28px;
+    box-shadow:0 30px 60px rgba(42,23,70,0.35);
+  }
+  .story-note{
+    position:absolute;
+    bottom:-26px; left:-26px;
+    background:var(--cream);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:16px 20px;
+    box-shadow:0 14px 30px rgba(42,23,70,0.18);
+    max-width:230px;
+    font-family:'Caveat',cursive;
+    font-weight:600;
+    font-size:20px;
+    color:var(--purple-deep);
+    transform:rotate(-3deg);
+  }
+  .story-copy p{font-size:16.5px; line-height:1.8; color:#3E2E58; margin:0 0 20px;}
+  .story-copy .story-quote{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:22px;
+    color:var(--purple-deep);
+    border-left:3px solid var(--gold);
+    padding-left:22px;
+    margin:28px 0;
+  }
+
+  /* ---------- SOLUTION INTRO ---------- */
+  .solution-card{
+    background:linear-gradient(160deg, #3a2361, var(--purple-deep) 60%, #1c0f33);
+    border-radius:32px;
+    padding:60px clamp(24px,6vw,72px);
+    text-align:center;
+    color:#F3EAFB;
+    box-shadow:0 40px 80px rgba(28,15,51,0.4);
+  }
+  .solution-card h2{color:#FBF4E8; font-size:clamp(26px,4vw,40px);}
+  .solution-card p{color:#D9C9EE; font-size:17px; max-width:680px; margin:20px auto 0; line-height:1.7;}
+
+  /* ---------- ENGINES ---------- */
+  .engine-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:22px;
+    margin-top:56px;
+    position:relative;
+  }
+  .engine-card{
+    background:var(--cream);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:28px;
+    box-shadow:0 12px 28px rgba(42,23,70,0.07);
+    position:relative;
+  }
+  .engine-num{
+    width:44px; height:44px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--gold-light), var(--gold-deep));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:700; font-size:18px;
+    color:var(--purple-deep);
+    margin-bottom:16px;
+    box-shadow:0 8px 18px rgba(199,154,62,0.35);
+  }
+  .engine-card h4{font-size:18.5px; margin-bottom:10px; color:var(--purple-deep);}
+  .engine-card .before{font-size:13.5px; color:#8A7AA3; margin-bottom:6px;}
+  .engine-card .before b{color:#B03A3A; font-weight:700;}
+  .engine-card .after{font-size:14.5px; color:#3E2E58; line-height:1.55;}
+  .engine-card .after b{color:var(--gold-deep);}
+
+  /* ---------- PROOF ---------- */
+  .proof-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:center; margin-top:20px;}
+  .video-frame{
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 30px 60px rgba(42,23,70,0.28);
+    border:6px solid var(--cream);
+    aspect-ratio:16/9;
+    background:#000;
+    position:relative;
+    display:block;
+    cursor:pointer;
+  }
+  .video-frame img{width:100%; height:100%; object-fit:cover; display:block;}
+  .video-frame iframe{width:100%; height:100%; border:0; display:block;}
+  .video-frame .play-btn{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:76px; height:76px; border-radius:50%;
+    background:rgba(255,255,255,0.92);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 12px 30px rgba(0,0,0,0.35);
+    transition:transform .2s ease;
+  }
+  .video-frame:hover .play-btn{transform:translate(-50%,-50%) scale(1.08);}
+  .video-frame .play-btn::after{
+    content:'';
+    border-style:solid;
+    border-width:14px 0 14px 22px;
+    border-color:transparent transparent transparent var(--purple-deep);
+    margin-left:5px;
+  }
+  .video-frame .watch-label{
+    position:absolute; bottom:14px; left:14px;
+    background:rgba(36,21,53,0.75);
+    color:#F6E9C8;
+    font-size:12.5px;
+    font-weight:700;
+    padding:7px 14px;
+    border-radius:999px;
+  }
+  .proof-caption{
+    background:var(--cream);
+    border-radius:18px;
+    padding:24px 26px;
+    box-shadow:0 12px 26px rgba(42,23,70,0.08);
+  }
+  .proof-caption h4{font-size:19px; margin-bottom:8px;}
+  .proof-caption p{font-size:14.5px; color:#5A4874; line-height:1.6; margin:0;}
+  .engine1-shot{margin-top:34px; border-radius:20px; overflow:hidden; box-shadow:0 20px 44px rgba(42,23,70,0.18); border:1px solid var(--line);}
+
+  /* ---------- BONUSES ---------- */
+  .bonus-list{display:flex; flex-direction:column; gap:16px; margin-top:48px;}
+  .bonus-row{
+    display:flex; gap:20px; align-items:flex-start;
+    background:var(--cream);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px 26px;
+    box-shadow:0 10px 22px rgba(42,23,70,0.06);
+  }
+  .bonus-icon{
+    font-size:26px;
+    width:52px; height:52px; flex:none;
+    border-radius:14px;
+    background:var(--lilac);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .bonus-row h4{font-size:17px; margin-bottom:6px;}
+  .bonus-row p{font-size:14.5px; color:#5A4874; line-height:1.6; margin:0;}
+
+  /* ---------- VAULT GALLERY ---------- */
+  .vault-gallery{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-top:50px;
+  }
+  .vault-item{
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 16px 34px rgba(42,23,70,0.14);
+    border:1px solid var(--line);
+    background:var(--cream);
+  }
+  .vault-item img{width:100%; height:220px; object-fit:cover;}
+  .vault-item .cap{padding:14px 16px; font-size:13.5px; font-weight:700; color:var(--purple-deep);}
+
+  /* ---------- VALUE STACK ---------- */
+  .value-table{
+    background:var(--cream);
+    border-radius:24px;
+    padding:8px;
+    box-shadow:0 20px 46px rgba(42,23,70,0.14);
+    margin-top:50px;
+    overflow:hidden;
+  }
+  .value-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:17px 26px;
+    border-bottom:1px dashed var(--line);
+    font-size:15.5px;
+    color:#3E2E58;
+  }
+  .value-row:last-of-type{border-bottom:none;}
+  .value-row b{color:var(--purple-deep); font-weight:700;}
+  .value-row .val{font-weight:700; color:#8A7AA3; text-decoration:line-through;}
+  .value-total{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:26px 28px;
+    background:linear-gradient(135deg,var(--purple-deep),#3a2361);
+    border-radius:18px;
+    margin:14px 8px 8px;
+    color:#F3EAFB;
+  }
+  .value-total .label{font-size:15px; font-weight:600; color:#D9C9EE;}
+  .value-total .price{font-family:'Fraunces',serif; font-size:36px; font-weight:700; color:#F6E9C8;}
+  .anchor-visual{margin-top:34px; border-radius:20px; overflow:hidden; box-shadow:0 20px 44px rgba(42,23,70,0.2);}
+  .anchor-caption{text-align:center; font-size:13.5px; color:#6B5789; margin-top:12px; font-weight:600;}
+
+  /* ---------- ADD-ON ---------- */
+  .addon-card{
+    background:linear-gradient(160deg,#241535,#3a2361);
+    border-radius:28px;
+    padding:clamp(28px,5vw,56px);
+    color:#F3EAFB;
+    box-shadow:0 40px 80px rgba(28,15,51,0.4);
+    border:1px solid rgba(233,201,120,0.25);
+  }
+  .addon-card h2{color:#FBF4E8;}
+  .addon-grid{display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-top:34px; align-items:center;}
+  .addon-copy p{font-size:15.5px; line-height:1.75; color:#D9C9EE; margin:0 0 16px;}
+  .addon-check{
+    display:flex; align-items:flex-start; gap:14px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(233,201,120,0.3);
+    border-radius:16px;
+    padding:20px 22px;
+    margin-top:26px;
+  }
+  .addon-check input{width:20px; height:20px; margin-top:2px; accent-color:var(--gold);}
+  .addon-check label{font-size:15px; font-weight:700; color:#F6E9C8; cursor:pointer; line-height:1.5;}
+  .addon-check .price-tag{color:var(--gold-light); font-weight:800;}
+  .addon-media img{border-radius:20px; box-shadow:0 20px 44px rgba(0,0,0,0.35);}
+  .addon-media .video-frame{margin-top:18px;}
+  .addon-note{
+    margin-top:22px; font-size:13px; color:#C9B6E4; line-height:1.6;
+    background:rgba(255,255,255,0.05); border-radius:12px; padding:14px 18px;
+  }
+
+  /* ---------- WHO FOR ---------- */
+  .who-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:50px;}
+  .who-card{border-radius:20px; padding:30px; }
+  .who-yes{background:var(--cream); border:1px solid var(--line); box-shadow:0 12px 26px rgba(42,23,70,0.06);}
+  .who-no{background:transparent; border:1.5px dashed rgba(75,46,125,0.3);}
+  .who-card h4{font-size:18px; margin-bottom:18px; display:flex; align-items:center; gap:10px;}
+  .who-card ul{margin:0; padding:0; list-style:none;}
+  .who-card li{font-size:14.5px; line-height:1.6; color:#3E2E58; margin-bottom:13px; padding-left:26px; position:relative;}
+  .who-yes li::before{content:'✓'; position:absolute; left:0; color:var(--gold-deep); font-weight:900;}
+  .who-no li::before{content:'✕'; position:absolute; left:0; color:#A28BC4; font-weight:900;}
+
+  /* ---------- TESTIMONIAL MARQUEE ---------- */
+  .marquee-wrap{overflow:hidden; margin-top:50px; -webkit-mask-image:linear-gradient(90deg, transparent, black 6%, black 94%, transparent); mask-image:linear-gradient(90deg, transparent, black 6%, black 94%, transparent);}
+  .marquee-track{display:flex; gap:22px; width:max-content; animation:scroll-x 55s linear infinite;}
+  .marquee-track:hover{animation-play-state:paused;}
+  @keyframes scroll-x{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+  .testi-card{
+    width:260px; flex:none;
+    background:var(--cream);
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 16px 34px rgba(42,23,70,0.12);
+    border:1px solid var(--line);
+  }
+  .testi-card img{width:100%; height:300px; object-fit:cover; object-position:top;}
+  .testi-card .tcap{padding:14px 16px; font-size:12.5px; color:#5A4874; line-height:1.5; font-weight:600;}
+
+  /* ---------- COMPARISON ---------- */
+  .compare-table{width:100%; border-collapse:separate; border-spacing:0; margin-top:50px; background:var(--cream); border-radius:20px; overflow:hidden; box-shadow:0 16px 36px rgba(42,23,70,0.1);}
+  .compare-table th,.compare-table td{padding:18px 20px; font-size:14.5px; text-align:left; border-bottom:1px solid var(--line);}
+  .compare-table th{background:var(--purple-deep); color:#F6E9C8; font-family:'Fraunces',serif; font-weight:600; font-size:15.5px;}
+  .compare-table td:first-child, .compare-table th:first-child{font-weight:700; color:var(--purple-deep);}
+  .compare-table tr:last-child td{border-bottom:none;}
+  .compare-highlight{background:var(--lilac);}
+
+  /* ---------- FAQ ---------- */
+  .faq-item{
+    background:var(--cream);
+    border:1px solid var(--line);
+    border-radius:16px;
+    margin-bottom:14px;
+    overflow:hidden;
+  }
+  .faq-item summary{
+    padding:20px 24px;
+    font-weight:700;
+    font-size:15.5px;
+    color:var(--purple-deep);
+    cursor:pointer;
+    list-style:none;
+    display:flex; justify-content:space-between; align-items:center;
+    gap:16px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{
+    content:'+';
+    font-size:22px; font-weight:400; color:var(--gold-deep);
+    flex:none;
+    transition:transform .25s ease;
+  }
+  .faq-item[open] summary::after{transform:rotate(45deg);}
+  .faq-item .faq-body{padding:0 24px 22px; font-size:14.5px; color:#5A4874; line-height:1.7;}
+
+  /* ---------- GUARANTEE ---------- */
+  .guarantee-box{
+    display:flex; gap:26px; align-items:center;
+    background:var(--cream);
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:32px 34px;
+    box-shadow:0 14px 30px rgba(42,23,70,0.08);
+  }
+  .guarantee-icon{
+    width:76px; height:76px; flex:none; border-radius:50%;
+    background:linear-gradient(135deg,var(--gold-light),var(--gold-deep));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:700; font-size:14px; color:var(--purple-deep);
+    text-align:center; line-height:1.2;
+    box-shadow:0 10px 22px rgba(199,154,62,0.35);
+  }
+  .guarantee-box p{margin:0; font-size:14.5px; color:#3E2E58; line-height:1.65;}
+  .guarantee-box h4{margin-bottom:8px;}
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{
+    text-align:center;
+    background:radial-gradient(80% 100% at 50% 0%, rgba(199,154,62,0.18), transparent 60%), linear-gradient(180deg,var(--lilac),var(--lilac-deep));
+    padding:100px 0 110px;
+  }
+  .final-cta h2{font-size:clamp(28px,4.2vw,44px); max-width:760px; margin:0 auto 22px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--purple-deep); color:#C9B6E4; padding:50px 0 34px; font-size:13px; line-height:1.7;}
+  footer .container{display:flex; flex-direction:column; gap:18px;}
+  footer .foot-top{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+  footer .foot-brand{display:flex; align-items:center; gap:10px; color:#F6E9C8; font-family:'Fraunces',serif; font-size:17px; font-weight:600;}
+  footer .foot-brand img{width:34px;height:34px;border-radius:50%;}
+  footer p{margin:0; color:#A992C9;}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.show{opacity:1; transform:translateY(0);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:900px){
+    .story-wrap{grid-template-columns:1fr; gap:70px 0;}
+    .story-note{position:static; margin-top:20px; transform:none; max-width:100%;}
+    .pain-grid{grid-template-columns:1fr;}
+    .engine-grid{grid-template-columns:1fr;}
+    .proof-grid{grid-template-columns:1fr; gap:26px;}
+    .vault-gallery{grid-template-columns:repeat(2,1fr);}
+    .addon-grid{grid-template-columns:1fr;}
+    .who-grid{grid-template-columns:1fr;}
+    .compare-table{font-size:12.5px;}
+    .compare-table th,.compare-table td{padding:12px 10px;}
+    .nav-brand span{display:none;}
+    .section{padding:64px 0;}
+    .guarantee-box{flex-direction:column; text-align:center;}
+  }
+  @media(max-width:520px){
+    .value-total{flex-direction:column; align-items:flex-start; gap:8px;}
+    .vault-gallery{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <img src="vip roi assets/logo-small.gif" alt="Digitera Levi">
+      <span>Digitera Levi</span>
+    </div>
+    <a href="#offer" class="nav-cta">Get It Now — ₱997</a>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="container">
+    <div class="warning-tag"><span class="dot"></span> BABALA — Basahin Muna 'To Bago Ka Mag-Start</div>
+    <h1>Wag Ka Munang Mag-Start Ng Digital Product Business Kung Hindi Mo Pa Nabasa Ito</h1>
+    <p class="sub">Baka mag-waste ka lang din ng months — nag-DIY ng system from scratch, puyat nang puyat, walang malinaw na direction — just like what I did before I figured out what was actually missing. <b>VIP ROI Framework:</b> 10 automated engines na na-build ko mula sa sarili kong grind, para hindi mo na kailangang dumaan sa parehong struggle.</p>
+    <a href="#offer" class="btn btn-gold">Sige, Gusto Ko Na 'To — ₱997</a>
+    <span class="btn-sub">One-time payment lang · Lifetime access · Instant delivery, diretso sa email mo</span>
+    <div class="trust-row">
+      <span>10 Automated Engines</span>
+      <span>Mega Digital Product Vault</span>
+      <span>Lifetime Access</span>
+      <span>One-Time Payment</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== PROBLEM ===================== -->
+<section class="section bg-beige reveal">
+  <div class="container center">
+    <span class="eyebrow">Yung Totoong Nangyayari</span>
+    <h2 style="font-size:clamp(24px,3.6vw,38px); margin-top:16px; max-width:720px; margin-left:auto; margin-right:auto;">Alam Mo Yung Feeling Na Sobrang Gusto Mo Nang Mag-Start, Pero Parang Laging May Kulang?</h2>
+    <p class="lede" style="margin-top:18px;">Marami sa'tin pumapasok sa digital products kasi gusto nating may extra income, gusto nating maging boss ng sariling time, gusto nating makatulong sa family nang hindi laging umaasa sa isang sweldo lang. Pero eto yung hindi sinasabi sa'yo ng iba:</p>
+    <div class="pain-grid">
+      <div class="pain-card">Alam mong kailangan mo ng sales page — pero wala kang idea paano gumawa ng isa na <b>talagang nagko-convert</b>, hindi lang yung "pwede na."</div>
+      <div class="pain-card">Nag-a-adjust ka ng ad copy paulit-ulit, feeling mo <b>tumatapon ka lang ng budget sa wala.</b> Walang malinaw na system kung ano ba talaga ang gumagana.</div>
+      <div class="pain-card">May tools na dapat mong gamitin — pero every "free training" na pinupuntahan mo? <b>Nagbe-sell lang pala ng next product nila.</b> Back to square one ka ulit.</div>
+      <div class="pain-card">Gusto mo nang mag-scale, pero takot kang magdagdag ng ad spend kasi baka masayang lang — <b>walang malinaw na signal</b> kung kailan safe mag-increase.</div>
+    </div>
+    <p style="margin-top:40px; font-family:'Fraunces',serif; font-size:22px; font-style:italic; color:var(--purple-deep);">Hindi ikaw ang problema. System lang talaga ang kulang.</p>
+  </div>
+</section>
+
+<!-- ===================== STORY ===================== -->
+<section class="section bg-lilac reveal">
+  <div class="container">
+    <div class="story-wrap">
+      <div class="story-photo">
+        <img src="vip roi assets/logo-story.jpg" alt="Digitera Levi">
+        <div class="story-note">"Months ako nag-grind para ma-build 'to — para hindi mo na kailangang ulitin yung pinagdaanan ko." — Levi</div>
+      </div>
+      <div class="story-copy">
+        <span class="eyebrow">Ang Kwento Sa Likod</span>
+        <h2 style="font-size:clamp(24px,3.4vw,34px); margin-top:14px; margin-bottom:22px;">Hindi Ako Nag-Start Dito Na May Ready-Made Na Roadmap</h2>
+        <p>Gusto ko ng sarili kong kita — hindi laging umaasa sa isang sweldo, may kontrol sa sariling time, may pang-tulong sa family. Pero wala akong idea paano gumawa ng sales page na talagang nagco-convert, paano i-track ang ad performance, paano malaman kung kailan safe mag-scale.</p>
+        <p class="story-quote">"Months ako nag-grind. From thinking about what product to sell, to building the system, to figuring out the automation — lahat ng 'yan, ginawa ko from scratch. Maraming gabi na puyat. Maraming araw na halos sumuko na. But I finished it."</p>
+        <p>Naging 10 working engines na 'yun. Hindi teorya. Hindi generic PDF na di mo naman magagamit. Ito yung exact system na ginagamit ko. At ngayon — hindi mo na kailangang dumaan sa parehong struggle just like what I did before.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SOLUTION INTRO ===================== -->
+<section class="section bg-beige reveal">
+  <div class="container">
+    <div class="solution-card">
+      <span class="eyebrow" style="color:var(--gold-light);">Kaya Ginawa Ko Ito</span>
+      <h2 style="margin-top:16px;">Introducing: VIP ROI Framework</h2>
+      <p>Hindi ito isang regular na ebook o video course na puro theory. Ito ay isang <b style="color:#F6E9C8;">complete automation suite</b> — 10 actual working engines na directly sumasagot sa bawat struggle ng digital product business mo. From building your sales page, to auditing your ads, to knowing exactly when to scale — lahat, nasa iisang framework na.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 10 ENGINES ===================== -->
+<section class="section bg-lilac reveal" id="engines">
+  <div class="container">
+    <div class="center">
+      <span class="eyebrow">What's Inside</span>
+      <h2 style="font-size:clamp(26px,3.8vw,40px); margin-top:16px;">Ang 10 Engines Na Direktang Sumasagot Sa Bawat Struggle Mo</h2>
+      <p class="lede center" style="margin-top:16px;">Bawat engine dito, ginawa ko para sa isang specific na pain point — yung mga same na struggles na dinaanan ko mismo before I figured it all out.</p>
+    </div>
+    <div class="engine-grid">
+      <div class="engine-card"><div class="engine-num">1</div><h4>📄 Sales Page Engine</h4><div class="before"><b>Before:</b> Mag-a-hire ka pa ng copywriter o ilang oras kang mag-iisip — tapos hindi ka pa rin sure kung mag-co-convert ba.</div><div class="after"><b>Now:</b> <b>Auto-generates</b> ang high-converting, long-form sales page mo. Plug in your offer details, labas na ang fully-structured copy.</div></div>
+      <div class="engine-card"><div class="engine-num">2</div><h4>🌐 Ad-Ready Auditor</h4><div class="before"><b>Before:</b> Naglu-launch ka ng ads nang hindi mo alam kung tama ba ang setup ng page mo, checkout, o Meta Pixel.</div><div class="after"><b>Now:</b> Ini-audit niya ang entire funnel setup mo <b>bago ka pa mag-spend</b> — para walang leaks, walang sayang na budget.</div></div>
+      <div class="engine-card"><div class="engine-num">3</div><h4>📊 Digitera ROI Vault V3</h4><div class="before"><b>Before:</b> Naggu-guess ka kung magkano ang potential mong kita — walang numbers, walang clarity.</div><div class="after"><b>Now:</b> <b>Kinakalkula</b> ang gross output at profit roadmap mo base sa actual niche mo. May projection ka na, hindi educated guess.</div></div>
+      <div class="engine-card"><div class="engine-num">4</div><h4>🎬 3:2:2 Creative Engine</h4><div class="before"><b>Before:</b> Ilang oras kang nag-iisip ng video concept at ad copy — tapos hindi pa rin siya kumukuha ng traction.</div><div class="after"><b>Now:</b> Nagbibigay ng <b>ready-to-execute</b> video blueprints at ad copy prompts na tested para sa conversion.</div></div>
+      <div class="engine-card"><div class="engine-num">5</div><h4>🧠 Psychological Story-Selling Matrix v3</h4><div class="before"><b>Before:</b> Alam mong kailangan ng hook, pero hindi mo alam paano i-structure para talagang mag-stick sa isip ng buyer.</div><div class="after"><b>Now:</b> Binibigyan ka ng <b>story-selling framework</b> na naka-base sa deep sales psychology — para mag-trigger ng emotion at buying decision.</div></div>
+      <div class="engine-card"><div class="engine-num">6</div><h4>⚡ Funnel Speed Optimization Analyzer</h4><div class="before"><b>Before:</b> Baka nag-le-leak ang sales mo dahil mabagal ang page load — at hindi mo pa alam.</div><div class="after"><b>Now:</b> <b>Pre-calculates</b> ang page load risk weights mo before it becomes a conversion killer.</div></div>
+      <div class="engine-card"><div class="engine-num">7</div><h4>🎨 15-Color Custom Funnel Configurator</h4><div class="before"><b>Before:</b> Ilang oras ka nag-a-adjust ng colors at layout para lang mag-match sa brand mo — sabay-sabay pa ang trial and error.</div><div class="after"><b>Now:</b> <b>Instant brand theme switching</b> with 15 color options — visual preview agad, walang guesswork.</div></div>
+      <div class="engine-card"><div class="engine-num">8</div><h4>🛡️ 48-Hour Ad Profit-Protector V2</h4><div class="before"><b>Before:</b> Takot kang mag-increase ng ad spend kasi baka masayang lang — walang signal kung safe na ba talaga.</div><div class="after"><b>Now:</b> <b>Real-time metrics audit</b> na sinasabi sa'yo kung kailan mag-scale at kailan agad i-kill ang ad. Protektado ang profit mo.</div></div>
+      <div class="engine-card"><div class="engine-num">9</div><h4>📅 30-Day Algorithm Inconsistency Tracker</h4><div class="before"><b>Before:</b> Nag-po-post ka, pero hindi mo alam kung consistent ka ba o nag-ge-get ka na ng algorithm penalty.</div><div class="after"><b>Now:</b> <b>Minomonitor</b> ang daily uploading momentum mo — para alam mo kung consistent ka at hindi ka nag-i-incur ng unnecessary penalties.</div></div>
+      <div class="engine-card"><div class="engine-num">10</div><h4>🎯 Scale-Up Playbook Engine</h4><div class="before"><b>Before:</b> Guessing game ang pag-increase ng budget — increase ka, then pray lang na hindi masayang.</div><div class="after"><b>Now:</b> Generates <b>safe, data-driven budget increments</b> based on your actual performance. Scale with confidence, hindi sa instinct lang.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROOF ===================== -->
+<section class="section bg-beige reveal">
+  <div class="container">
+    <div class="center" style="margin-bottom:10px;">
+      <span class="eyebrow">Proof, Hindi Lang Claim</span>
+      <h2 style="font-size:clamp(24px,3.6vw,36px); margin-top:16px;">Gusto Mong Makita Kung Paano Gumagana? Panoorin Mo 'To.</h2>
+    </div>
+    <div class="proof-grid" style="margin-top:40px;">
+      <a href="https://youtu.be/WZZr71MiAX0" target="_blank" class="video-frame">
+        <img src="https://img.youtube.com/vi/WZZr71MiAX0/maxresdefault.jpg" alt="VIP ROI Framework Dashboard video">
+        <span class="play-btn"></span>
+        <span class="watch-label">Panoorin sa YouTube</span>
+      </a>
+      <div class="proof-caption">
+        <h4>VIP ROI Framework Dashboard — Live Demo</h4>
+        <p>Lahat ng 10 engines, nasa iisang dashboard lang. Walang fluff, walang filler — buhay na buhay, gumagana talaga. Ito yung exact system na ginagamit ko every single day.</p>
+      </div>
+    </div>
+    <div class="engine1-shot">
+      <img src="vip roi assets/engine1-salespage.jpeg" alt="Engine 1 - Sales Page Engine screenshot">
+    </div>
+    <p class="center" style="font-size:13.5px; color:#6B5789; font-weight:700; margin-top:14px;">Engine 1 — Sales Page Engine, sa loob mismo ng dashboard</p>
+  </div>
+</section>
+
+<!-- ===================== BONUSES ===================== -->
+<section class="section bg-lilac reveal">
+  <div class="container">
+    <div class="center">
+      <span class="eyebrow">Wait, May Kasama Pa</span>
+      <h2 style="font-size:clamp(24px,3.6vw,36px); margin-top:16px;">On Top Ng 10 Engines, Kasama Pa Rin 'To Lahat</h2>
+    </div>
+    <div class="bonus-list">
+      <div class="bonus-row">
+        <div class="bonus-icon">⚙️</div>
+        <div>
+          <h4>Hybrid Chat-to-Cash Automation Master System</h4>
+          <p>Pre-built conversion funnels, Botcake master scripts, foreign FB groups list, isang <b>white-label online course</b> (paano gumawa ng sales funnel sa Systeme.io — pwede mong i-rebrand at ibenta, o gamitin bilang skill para kumita ng ₱1,000–₱5,000 per project), at isang <b>Done-For-You Editable Sales Funnel</b> na may kasamang copy na naka-infuse na ng sales psychology.</p>
+        </div>
+      </div>
+      <div class="bonus-row">
+        <div class="bonus-icon">👶</div>
+        <div><h4>KidzCreator PLR System Portal</h4><p>200+ editable kids animation videos sa Canva, may PLR at editable voiceovers — kumpletong toolkit para makagawa at makabenta ng educational content.</p></div>
+      </div>
+      <div class="bonus-row">
+        <div class="bonus-icon">📚</div>
+        <div><h4>Standard ROI Framework Fillable Workbook</h4><p>Mindset at transformation maps, Chapters 1–5 — para hindi lang techniques ang matutunan mo, kundi pati ang tamang pag-iisip sa likod ng matagumpay na negosyo.</p></div>
+      </div>
+      <div class="bonus-row">
+        <div class="bonus-icon">🗄️</div>
+        <div><h4>MEGA VAULT Access</h4><p>30 million PLR/MRR digital products, 80,000 faceless reel bundle, 100+ Canva funnel mockup templates, at marami pa — para sa mga wala pang sariling produkto at walang oras pang gumawa mula zero. Kasama pa: <b>manager access</b> sa 3 Million Bestselling Ebooks Collection at All-in-One Language Materials, para ma-resell mo mismo at makapagdagdag ng sarili mong members.</p></div>
+      </div>
+      <div class="bonus-row">
+        <div class="bonus-icon">⏱️</div>
+        <div><h4>3-Second Audio Hook Coach</h4><p>Built-in micro-recorder para mapractice ang high-retention video lines mo.</p></div>
+      </div>
+    </div>
+
+    <div class="vault-gallery">
+      <div class="vault-item"><img src="vip roi assets/vault-30m-products.jpeg" alt="30 million digital products vault"><div class="cap">30M Digital Products — PLR & MRR</div></div>
+      <div class="vault-item"><img src="vip roi assets/vault-80k-reels.jpeg" alt="80,000 faceless reel bundle"><div class="cap">80,000 Faceless Reel Bundle</div></div>
+      <div class="vault-item"><img src="vip roi assets/vault-3m-ebooks.jpeg" alt="3 million ebooks collection"><div class="cap">3M Bestselling Ebooks + Manager Access</div></div>
+      <div class="vault-item"><img src="vip roi assets/vault-languages.jpeg" alt="All in one language materials"><div class="cap">All-in-One Language Materials</div></div>
+      <div class="vault-item"><img src="vip roi assets/vault-canva-mockups.jpeg" alt="100+ Canva funnel mockup templates"><div class="cap">Full Funnel Mock-ups & Templates</div></div>
+      <div class="vault-item"><img src="vip roi assets/kidzcreator.jpeg" alt="KidzCreator PLR System"><div class="cap">KidzCreator PLR System</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== VALUE STACK ===================== -->
+<section class="section bg-beige reveal" id="offer">
+  <div class="container">
+    <div class="center">
+      <span class="eyebrow">The Complete Offer</span>
+      <h2 style="font-size:clamp(26px,3.8vw,40px); margin-top:16px;">Lahat Ng 'To — One-Time Payment Lang. Walang Monthly. Walang Ulit-Ulit Na Singil.</h2>
+    </div>
+    <div class="value-table">
+      <div class="value-row"><span>10 Automated Engines (Full Suite)</span><span class="val">₱9,970</span></div>
+      <div class="value-row"><span>Hybrid Chat-to-Cash Automation System + Done-For-You Funnel</span><span class="val">₱2,997</span></div>
+      <div class="value-row"><span>KidzCreator PLR System Portal</span><span class="val">₱1,997</span></div>
+      <div class="value-row"><span>Standard ROI Fillable Workbook</span><span class="val">₱497</span></div>
+      <div class="value-row"><span>MEGA VAULT (+ Resell Manager Access)</span><span class="val">₱4,997</span></div>
+      <div class="value-row"><span>3-Second Audio Hook Coach</span><span class="val">₱297</span></div>
+      <div class="value-total">
+        <span class="label">Kabuuang Halaga: <s style="opacity:.6;">₱20,755</s> &nbsp;→&nbsp; Ngayon, ikaw magbabayad lang ng</span>
+        <span class="price" id="total-price">₱997</span>
+      </div>
+    </div>
+    <div class="anchor-visual">
+      <img src="vip roi assets/hybrid-anchor.jpg" alt="Hybrid Product System value anchor">
+    </div>
+    <p class="anchor-caption">Kasama na ito sa VIP ROI Framework mo — hindi mo na kailangang bilhin nang hiwalay.</p>
+    <div class="center" style="margin-top:44px;">
+      <a href="https://digiteralevi.systeme.io/06031589" target="_blank" class="btn btn-gold" id="main-cta">Oo, Gusto Ko Na Ang VIP ROI Framework — <span id="cta-price">₱997</span></a>
+      <span class="btn-sub">Isang beses na bayad · Lifetime access · Instant delivery sa email mo</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ADD-ON ===================== -->
+<section class="section bg-deep reveal">
+  <div class="container">
+    <div class="addon-card">
+      <span class="eyebrow" style="color:var(--gold-light);">Optional Add-On — Level Up</span>
+      <h2 style="margin-top:14px; font-size:clamp(24px,3.6vw,36px);">Gusto Mo Bang Kumita Pa Bilang Freelancer Gamit Yung Exact Same Skill Na 'To?</h2>
+      <div class="addon-grid">
+        <div class="addon-copy">
+          <p>Aside sa VIP ROI Framework, may available ka ring optional add-on: <b style="color:#F6E9C8;">FunnelCraftPH + AI Business Employee</b> — a more advanced sales page generator, plus an AI assistant na sumasagot sa mga tanong ng customers mo kahit busy ka o offline ka.</p>
+          <p>Pero yung pinaka-exciting part? Ito ay investment sa a brandable skill. Kapag na-master mo ang FunnelCraftPH, pwede ka nang mag-offer ng sales page building service sa ibang businesses — local or abroad. Clients typically pay <b style="color:#F6E9C8;">₱1,000 to ₱5,000 per project</b> depending on scope. Hanap lang ng client sa Facebook groups, gumawa ng sample output, ipakita — that's literally the business model.</p>
+          <div class="addon-check">
+            <input type="checkbox" id="addon-checkbox">
+            <label for="addon-checkbox">Oo, gusto ko idagdag ang FunnelCraftPH + AI Business Employee — <span class="price-tag">+₱1,997</span></label>
+          </div>
+          <div class="addon-note">Manual payment lang para sa add-on na ito: GCash <b>09231892139</b> o Maya <b>09461825985</b> (Levi Ugaban Mariano). I-send ang resibo sa <a href="https://m.me/118441451362301?ref=2560834" target="_blank" style="color:var(--gold-light); text-decoration:underline;">Messenger</a> para maproseso agad ang access mo.</div>
+        </div>
+        <div class="addon-media">
+          <img src="vip roi assets/ai-business-employee.jpeg" alt="AI Business Employee assistant">
+          <a href="https://youtu.be/T4c_rqiVxCw" target="_blank" class="video-frame" style="margin-top:18px;">
+            <img src="https://img.youtube.com/vi/T4c_rqiVxCw/maxresdefault.jpg" alt="FunnelCraftPH Live Demo video">
+            <span class="play-btn"></span>
+            <span class="watch-label">Panoorin sa YouTube</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHO FOR ===================== -->
+<section class="section bg-lilac reveal">
+  <div class="container">
+    <div class="center">
+      <span class="eyebrow">Is This For You?</span>
+      <h2 style="font-size:clamp(24px,3.6vw,36px); margin-top:16px;">Para Sa'yo Ito Kung...</h2>
+    </div>
+    <div class="who-grid">
+      <div class="who-card who-yes">
+        <h4>✓ This Is For You If...</h4>
+        <ul>
+          <li>Gusto mong pumasok sa digital product business pero di mo alam paano mag-build ng system from scratch — at ayaw mong mag-waste ng months figuring it all out.</li>
+          <li>Wala kang time mag-create ng products from zero — need mo ng ready-to-use system na puwede mong gamitin agad.</li>
+          <li>Gusto mong may extra income stream na hindi laging nakadepende sa iisang sweldo.</li>
+          <li>Ready kang mag-invest ng time para matutong gamitin ang mga engine, kahit complete beginner ka pa lang.</li>
+        </ul>
+      </div>
+      <div class="who-card who-no">
+        <h4>✕ Skip This If...</h4>
+        <ul>
+          <li>Wala kang willingness na matuto kahit ng pinaka-basic na steps.</li>
+          <li>Expecting ka ng guaranteed income nang walang kahit kaunting effort mula sa'yo.</li>
+          <li>Hinahanap mo yung pinaka-mura, hindi yung pinaka-complete na system.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TESTIMONIALS ===================== -->
+<section class="section bg-beige reveal">
+  <div class="container">
+    <div class="center">
+      <span class="eyebrow">Real People. Real Results.</span>
+      <h2 style="font-size:clamp(24px,3.6vw,36px); margin-top:16px; max-width:760px; margin-left:auto; margin-right:auto;">May Pera Talaga Sa Digital Products — At Eto Ang Proof</h2>
+      <p class="lede center" style="margin-top:16px;">Ang mga wins na ito ay galing sa aming digital product community — real people na nag-take ng action at nagbago ang buhay nila. Hindi ito mga staged screenshots. Hindi ito actors. Totoong tao, totoong results. (Individual results — hindi guaranteed na same ang mangyayari sa'yo, depende sa effort at execution mo.)</p>
+    </div>
+  </div>
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marquee">
+      <div class="testi-card"><img src="vip roi assets/testi1-land.jpg" alt="Community testimonial"><div class="tcap">"I got this land because of selling digital products" 🙏</div></div>
+      <div class="testi-card"><img src="vip roi assets/testi2-7k24hrs.jpg" alt="Community testimonial"><div class="tcap">"Naka-7k na, wala pang 24hrs — digital products is superb talaga!"</div></div>
+      <div class="testi-card"><img src="vip roi assets/testi3-newvehicle.jpg" alt="Community testimonial"><div class="tcap">"Finally! No more sana all — totoo talagang may pera sa digital products!"</div></div>
+      <div class="testi-card"><img src="vip roi assets/testi4-102k29days.png" alt="Community testimonial"><div class="tcap">"Paano ako naka-earn ng ₱102k sa loob ng 29 days nang walang trabaho"</div></div>
+      <div class="testi-card"><img src="vip roi assets/testi5-lyndigitals.jpg" alt="Community testimonial"><div class="tcap">"Sharing my earnings from my own digital products"</div></div>
+      <div class="testi-card"><img src="vip roi assets/testi6-momgroceries.jpg" alt="Community testimonial"><div class="tcap">"Na-treat ko si mama gamit ang kinita ko sa digital products"</div></div>
+      <div class="testi-card"><img src="vip roi assets/testi7-gillinghouse.jpg" alt="Community testimonial"><div class="tcap">"We proudly built this — supported by our digital products business" — Miss Bel and Fam</div></div>
+      <!-- duplicate for seamless loop -->
+      <div class="testi-card"><img src="vip roi assets/testi1-land.jpg" alt="Community testimonial"><div class="tcap">"I got this land because of selling digital products" 🙏</div></div>
+      <div class="testi-card"><img src="vip roi assets/testi2-7k24hrs.jpg" alt="Community testimonial"><div class="tcap">"Naka-7k na, wala pang 24hrs — digital products is superb talaga!"</div></div>
+      <div class="testi-card"><img src="vip roi assets/testi3-newvehicle.jpg" alt="Community testimonial"><div class="tcap">"Finally! No more sana all — totoo talagang may pera sa digital products!"</div></div>
+      <div class="testi-card"><img src="vip roi assets/testi4-102k29days.png" alt="Community testimonial"><div class="tcap">"Paano ako naka-earn ng ₱102k sa loob ng 29 days nang walang trabaho"</div></div>
+      <div class="testi-card"><img src="vip roi assets/testi5-lyndigitals.jpg" alt="Community testimonial"><div class="tcap">"Sharing my earnings from my own digital products"</div></div>
+      <div class="testi-card"><img src="vip roi assets/testi6-momgroceries.jpg" alt="Community testimonial"><div class="tcap">"Na-treat ko si mama gamit ang kinita ko sa digital products"</div></div>
+      <div class="testi-card"><img src="vip roi assets/testi7-gillinghouse.jpg" alt="Community testimonial"><div class="tcap">"We proudly built this — supported by our digital products business" — Miss Bel and Fam</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COMPARISON ===================== -->
+<section class="section bg-lilac reveal">
+  <div class="container">
+    <div class="center">
+      <span class="eyebrow">Tapat Na Comparison</span>
+      <h2 style="font-size:clamp(24px,3.6vw,36px); margin-top:16px;">3 Paraan Para Mag-Start Sa Digital Products. Isa Sa Kanila, ₱997 Lang.</h2>
+    </div>
+    <table class="compare-table">
+      <tr><th>&nbsp;</th><th>DIY From Scratch</th><th>Bumili Ng Hiwalay-Hiwalay</th><th style="color:#F6E9C8;">VIP ROI Framework</th></tr>
+      <tr><td>Gastos</td><td>₱0 pero months ng oras mo</td><td>₱5,000–₱20,000+ bago pa makumpleto</td><td class="compare-highlight">₱997 one-time. Tapos na.</td></tr>
+      <tr><td>Time To Start</td><td>Months of trial and error</td><td>Weeks ng pag-setup at pag-connect ng tools</td><td class="compare-highlight">Same day — may engines ka na agad</td></tr>
+      <tr><td>Complete Ba?</td><td>Ikaw pa rin mag-bi-build ng lahat</td><td>Ikaw pa rin mag-co-connect ng lahat</td><td class="compare-highlight">10 engines, all-in-one system na</td></tr>
+      <tr><td>May Digital Product Vault?</td><td>Wala</td><td>Bibili ka pa ng hiwalay</td><td class="compare-highlight">Kasama na — Mega Vault, ready to sell</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="section bg-beige reveal">
+  <div class="container" style="max-width:780px;">
+    <div class="center">
+      <span class="eyebrow">Got Questions?</span>
+      <h2 style="font-size:clamp(24px,3.6vw,36px); margin-top:16px;">Sagutin Natin Ang Mga Tanong Mo</h2>
+    </div>
+    <div style="margin-top:44px;">
+      <details class="faq-item"><summary>Ano ba talaga ang VIP ROI Framework?</summary><div class="faq-body">It's a complete digital product business automation suite — 10 actual working engines covering everything from sales page creation, ad auditing, ROI projection, creative ideation, hanggang scaling strategy. Plus may bonus vault pa na puno ng ready-to-sell digital products. Hindi ito isang regular na course. Ito yung actual system na ginagamit ko.</div></details>
+      <details class="faq-item"><summary>Kailangan ko bang maging techy o marunong mag-code?</summary><div class="faq-body">Hindi. Step-by-step ang lahat ng engines — designed para sa beginners. Kung kaya mong mag-type at mag-follow ng instructions, kaya mo itong gamitin. No coding needed.</div></details>
+      <details class="faq-item"><summary>Paano ko matatanggap yung access pagkatapos ko bayaran?</summary><div class="faq-body">Instant delivery — makakatanggap ka ng login credentials at buong VIP ROI Framework sa email mo right after payment. No waiting, no delays.</div></details>
+      <details class="faq-item"><summary>May refund policy ba?</summary><div class="faq-body">Dahil digital product ito at instant-delivery, wala kaming refund policy once na-send na ang files. Pero kung may questions ka bago ka mag-checkout, i-message mo lang ako sa Messenger — masaya akong sagutin bago ka pa mag-decide. Transparent tayo dito.</div></details>
+      <details class="faq-item"><summary>One-time payment lang talaga? Walang monthly?</summary><div class="faq-body">Yes — one-time payment, lifetime access. Walang subscription, walang recurring charge, walang ulit-ulit na singil. Bayad ka ng isang beses, sa'yo na yan forever.</div></details>
+      <details class="faq-item"><summary>Ano yung FunnelCraftPH + AI Business Employee add-on?</summary><div class="faq-body">Optional upgrade ito (₱1,997) na nagbibigay sa'yo ng more advanced sales page generator plus an AI assistant na sumasagot sa customer inquiries mo kahit offline ka. On top of that, pwede mong gamitin ang skill na ito para mag-offer ng freelance service sa ibang businesses — clients typically pay ₱1,000–₱5,000 per project.</div></details>
+      <details class="faq-item"><summary>Paano ang payment para sa add-on?</summary><div class="faq-body">Manual payment via GCash o Maya lang — send mo ang resibo sa Messenger ko at i-process ko agad ang access mo.</div></details>
+      <details class="faq-item"><summary>May support ba kung may tanong ako after purchase?</summary><div class="faq-body">Yes — i-message mo lang ako sa Messenger anytime. Nandito ako para sagutin ang mga tanong mo at tulungan ka sa paggamit ng mga engines.</div></details>
+      <details class="faq-item"><summary>Para kanino talaga ito?</summary><div class="faq-body">Para sa sinumang gustong pumasok o mag-grow sa digital product business — especially yung ayaw mag-DIY ng system from scratch at gusto ng ready-to-use na framework na gumagana na.</div></details>
+      <details class="faq-item"><summary>Ilan ba talaga yung engines?</summary><div class="faq-body">Sampung engines — lahat kasama sa iisang framework. Hindi mo kailangang bilhin nang hiwalay-hiwalay. All-in, all-access, one-time payment.</div></details>
+    </div>
+
+    <div class="guarantee-box" style="margin-top:50px;">
+      <div class="guarantee-icon">TAPAT<br>NA ALOK</div>
+      <div>
+        <h4>Walang Fine Print. Tapat Lang.</h4>
+        <p>Digital product ito — instant delivery, so walang refund once na-send na ang files. Alam ko, medyo bold yun na sabihin. Pero mas gusto kong maging transparent kaysa magpretend na may 30-day money-back guarantee na baka hindi naman talaga mangyayari. What I can promise: kung may tanong ka bago ka mag-checkout, i-message mo lang ako sa Messenger — sasagutin kita nang tapat. At kapag nabili mo na — one-time payment, lifetime access. No monthly. No ulit-ulit na singil. Sa'yo na 'yan forever.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FINAL CTA ===================== -->
+<section class="final-cta reveal">
+  <div class="container">
+    <span class="eyebrow">Your Move</span>
+    <h2 style="margin-top:16px;">Mag-DIY Ka Pa Ng System From Scratch — O Kukunin Mo Na Yung Complete System Na Gumagana Na?</h2>
+    <p class="lede center" style="margin-top:18px;">Alam mo na yung struggle. Alam mo na rin ngayon na may system na handa para sa'yo — na-build ko mula sa sarili kong grind, para hindi mo na kailangang dumaan sa parehong hirap just like what I did before. The only question left: kailan ka mag-a-act?</p>
+    <div style="margin-top:36px;">
+      <a href="https://digiteralevi.systeme.io/06031589" target="_blank" class="btn btn-gold">Sige, Kukunin Ko Na 'To — ₱997</a>
+      <span class="btn-sub">One-time payment · Lifetime access · Instant delivery, diretso sa email mo</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-top">
+      <div class="foot-brand"><img src="vip roi assets/logo-small.gif" alt="Digitera Levi"> Digitera Levi</div>
+      <a href="https://digiteralevi.systeme.io/06031589" target="_blank" class="nav-cta">Get It Now — ₱997</a>
+    </div>
+    <p>May tanong bago ka mag-checkout? I-message mo ako sa <a href="https://m.me/118441451362301?ref=2560834" target="_blank" style="color:#E9C978; text-decoration:underline;">Messenger</a>.</p>
+    <p>© 2026 Digitera Levi — VIP ROI Framework. Lahat ng karapatan ay nakalaan. Ang mga resulta ng ibang tao ay indibidwal na resulta lamang at hindi garantiya ng kikitain mo. Ang produktong ito ay nagbibigay ng mga tool, sistema, at edukasyon — hindi garantiya ng kita.</p>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 12);
+  });
+
+  const checkbox = document.getElementById('addon-checkbox');
+  const totalPrice = document.getElementById('total-price');
+  const ctaPrice = document.getElementById('cta-price');
+  checkbox.addEventListener('change', () => {
+    const price = checkbox.checked ? '₱2,994' : '₱997';
+    totalPrice.textContent = price;
+    ctaPrice.textContent = price;
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
