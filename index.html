@@ -896,6 +896,108 @@
   </div>
 </footer>
 
+
+
+<!-- ===================== BUYER POP-UP NOTIFICATIONS ===================== -->
+<style>
+  .buyer-popup{
+    position:fixed;
+    bottom:28px;
+    left:24px;
+    z-index:998;
+    background:white;
+    border-radius:16px;
+    padding:14px 18px;
+    box-shadow:0 10px 32px rgba(42,23,70,0.18);
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    gap:14px;
+    max-width:290px;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    transform:translateY(120px);
+    opacity:0;
+    transition:transform .45s cubic-bezier(.34,1.56,.64,1), opacity .35s ease;
+    pointer-events:none;
+  }
+  .buyer-popup.show{
+    transform:translateY(0);
+    opacity:1;
+    pointer-events:auto;
+  }
+  .buyer-avatar{
+    width:42px; height:42px; border-radius:50%; flex:none;
+    background:linear-gradient(135deg,var(--lilac-deep),var(--purple-mid));
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px;
+  }
+  .buyer-info{font-size:13px; line-height:1.45; color:var(--ink);}
+  .buyer-info b{color:var(--purple-deep); font-weight:700;}
+  .buyer-info .buyer-time{
+    display:block;
+    font-size:11.5px;
+    color:#9B8AB4;
+    margin-top:3px;
+    font-weight:600;
+  }
+  .buyer-close{
+    position:absolute; top:8px; right:10px;
+    background:none; border:none; cursor:pointer;
+    font-size:14px; color:#B0A0C8; line-height:1;
+    padding:2px 4px;
+  }
+</style>
+
+<div class="buyer-popup" id="buyerPopup">
+  <div class="buyer-avatar" id="buyerAvatar">🛒</div>
+  <div class="buyer-info">
+    <span id="buyerText"><b>Someone</b> just grabbed a Digitera product</span>
+    <span class="buyer-time" id="buyerTime">2 mins ago</span>
+  </div>
+  <button class="buyer-close" onclick="document.getElementById('buyerPopup').classList.remove('show')">✕</button>
+</div>
+
+<script>
+  const buyers = [
+    {name:'Maria G.', city:'Quezon City', time:'just now', emoji:'✅', product:'All-in-One Language Materials'},
+    {name:'Ana R.', city:'Cebu', time:'1 min ago', emoji:'🛍️', product:'3 Million Ebooks Collection'},
+    {name:'Joy M.', city:'Davao', time:'2 mins ago', emoji:'🛒', product:'KidzCreator System'},
+    {name:'Kristine P.', city:'Manila', time:'3 mins ago', emoji:'✅', product:'30 Million Digital Product Vault'},
+    {name:'Rachel T.', city:'Laguna', time:'just now', emoji:'🎉', product:'Dental Social Media Templates'},
+    {name:'Melissa C.', city:'Batangas', time:'1 min ago', emoji:'✅', product:'BrilliantKidz System'},
+    {name:'Diane A.', city:'Pampanga', time:'2 mins ago', emoji:'🛍️', product:'All-in-One Language Materials'},
+    {name:'Sunshine L.', city:'Iloilo', time:'just now', emoji:'🛒', product:'3 Million Ebooks Collection'},
+    {name:'Patricia V.', city:'Rizal', time:'1 min ago', emoji:'✅', product:'KidzCreator System'},
+    {name:'Lovely B.', city:'Bulacan', time:'3 mins ago', emoji:'🎉', product:'30 Million Digital Product Vault'},
+    {name:'Claire N.', city:'Paranaque', time:'just now', emoji:'🛍️', product:'Dental Social Media Templates'},
+    {name:'Janine F.', city:'Makati', time:'2 mins ago', emoji:'✅', product:'BrilliantKidz System'},
+    {name:'Christine D.', city:'Cavite', time:'just now', emoji:'🛒', product:'All-in-One Language Materials'},
+    {name:'Maricel S.', city:'Zamboanga', time:'1 min ago', emoji:'✅', product:'3 Million Ebooks Collection'},
+    {name:'Rowena T.', city:'Cagayan de Oro', time:'2 mins ago', emoji:'🎉', product:'KidzCreator System'},
+    {name:'Aileen B.', city:'General Santos', time:'just now', emoji:'🛍️', product:'30 Million Digital Product Vault'},
+  ];
+
+  const popup = document.getElementById('buyerPopup');
+  const buyerText = document.getElementById('buyerText');
+  const buyerTime = document.getElementById('buyerTime');
+  const buyerAvatar = document.getElementById('buyerAvatar');
+
+  function showBuyer(){
+    const b = buyers[Math.floor(Math.random() * buyers.length)];
+    buyerAvatar.textContent = b.emoji;
+    buyerText.innerHTML = `<b>${b.name} from ${b.city}</b> just purchased <b>${b.product}</b>`;
+    buyerTime.textContent = b.time;
+    popup.classList.add('show');
+    setTimeout(() => popup.classList.remove('show'), 5000);
+  }
+
+  // First popup after 6 seconds, then every 18-30 seconds randomly
+  setTimeout(() => {
+    showBuyer();
+    setInterval(() => showBuyer(), 18000 + Math.random() * 12000);
+  }, 6000);
+</script>
+
 <script>
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
@@ -917,6 +1019,59 @@
   }, { threshold: 0.08 });
   revealEls.forEach(el => io.observe(el));
 </script>
+
+
+<style>
+.ai-float-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #E9C978, #C79A3E 55%, #9C7628);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 28px rgba(199,154,62,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  text-decoration: none;
+  transition: transform .2s, box-shadow .2s;
+  animation: gold-shimmer 2.4s ease-in-out infinite;
+}
+@keyframes gold-shimmer {
+  0%,100% { box-shadow: 0 6px 28px rgba(199,154,62,0.55); }
+  50%      { box-shadow: 0 8px 38px rgba(233,201,120,0.85), 0 0 0 8px rgba(199,154,62,0.15); }
+}
+.ai-float-btn:hover { transform: scale(1.1); box-shadow: 0 12px 36px rgba(199,154,62,0.7); }
+.ai-float-btn svg { width: 28px; height: 28px; fill: #2A1746; }
+.ai-tooltip {
+  position: fixed;
+  bottom: 96px;
+  right: 16px;
+  background: #fff;
+  color: #2A1746;
+  padding: 9px 15px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 4px 18px rgba(42,23,70,0.18);
+  white-space: nowrap;
+  z-index: 9998;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  border: 1px solid rgba(199,154,62,0.3);
+}
+</style>
+<div class="ai-tooltip">💬 May tanong? I-Chat kami!</div>
+<a class="ai-float-btn"
+   href="https://tinyurl.com/digiteraleviassistant"
+   target="_blank">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+  </svg>
+</a>
 
 </body>
 </html>
